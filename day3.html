@@ -1,0 +1,1033 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MIET College - Smart Campus Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ============ TOKENS ============ */
+  :root{
+    --ink:        #14213D;
+    --ink-soft:   #223055;
+    --gold:       #E9B44C;
+    --gold-dark:  #C6902F;
+    --paper:      #FBF8F2;
+    --paper-dim:  #F1ECE0;
+    --coral:      #E4562E;
+    --sage:       #4C7A5D;
+    --slate:      #5B6472;
+    --card:       #FFFFFF;
+    --line:       #DFD8C6;
+
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Work Sans", -apple-system, sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+
+    --radius: 14px;
+    --shadow: 0 12px 30px -14px rgba(20,33,61,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  a{ color:inherit; }
+
+  h1,h2,h3{
+    font-family:var(--font-display);
+    line-height:1.15;
+    margin:0 0 .5em;
+    color:var(--ink);
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:.72rem;
+    color:var(--gold-dark);
+    font-weight:600;
+  }
+
+  /* ============ LAYOUT WRAPPER ============ */
+  main, header, nav, footer{
+    max-width:1080px;
+    margin:0 auto;
+  }
+  main{ padding:0 24px; }
+
+  section{ padding:56px 0; }
+
+  /* perforated divider replacing <hr> */
+  hr{
+    border:none;
+    position:relative;
+    height:1px;
+    margin:0 24px;
+    background:repeating-linear-gradient(to right, var(--line) 0 10px, transparent 10px 20px);
+  }
+  hr::before, hr::after{
+    content:"";
+    position:absolute;
+    top:50%; transform:translateY(-50%);
+    width:14px; height:14px;
+    border-radius:50%;
+    background:var(--paper);
+    border:1px solid var(--line);
+  }
+  hr::before{ left:-31px; }
+  hr::after{ right:-31px; }
+
+  /* ============ HEADER ============ */
+  body > header{
+    max-width:none;
+    background:var(--ink);
+    color:var(--paper);
+    padding:40px 24px 34px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  body > header::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 8% 20%, rgba(233,180,76,0.14), transparent 40%),
+      radial-gradient(circle at 92% 80%, rgba(233,180,76,0.10), transparent 45%);
+    pointer-events:none;
+  }
+  body > header img{
+    margin:0 auto 14px;
+    border-radius:10px;
+    border:2px solid var(--gold);
+    padding:4px;
+    background:rgba(255,255,255,0.05);
+  }
+  body > header h1{
+    color:#fff;
+    font-size:clamp(2rem, 4vw, 2.7rem);
+    letter-spacing:.01em;
+  }
+  body > header p{
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    font-size:.78rem;
+    color:var(--gold);
+    margin:0;
+  }
+
+  /* ============ NAV ============ */
+  nav{
+    max-width:none;
+    background:var(--ink-soft);
+    position:sticky; top:0; z-index:50;
+    border-bottom:3px solid var(--gold);
+  }
+  nav ul{
+    max-width:1080px;
+    margin:0 auto;
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:4px;
+    padding:0 24px;
+  }
+  nav a{
+    display:block;
+    text-decoration:none;
+    color:#EDE9DD;
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:16px 16px;
+    border-bottom:3px solid transparent;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  nav a:hover{ color:var(--gold); border-bottom-color:var(--gold); }
+
+  /* remove the section-adjacent hr right after nav visually */
+  nav + hr{ display:none; }
+
+  /* ============ HERO ============ */
+  #home{ padding-top:44px; }
+  #home figure{
+    margin:0 0 28px;
+    position:relative;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  #home figure img{
+    width:100%;
+    height:340px;
+    object-fit:cover;
+    filter:saturate(1.05);
+  }
+  #home figure::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,33,61,0) 40%, rgba(20,33,61,0.82) 100%);
+  }
+  #home figcaption{
+    position:absolute;
+    left:20px; bottom:16px;
+    color:#fff;
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    font-size:.75rem;
+    z-index:2;
+  }
+  #home h2{
+    font-size:clamp(1.6rem, 3vw, 2.2rem);
+    max-width:34ch;
+  }
+  #home > p{
+    color:var(--slate);
+    max-width:62ch;
+    font-size:1.05rem;
+  }
+
+  /* ============ ABOUT ============ */
+  #about blockquote{
+    font-family:var(--font-display);
+    font-style:italic;
+    font-size:1.25rem;
+    color:var(--ink-soft);
+    border-left:4px solid var(--gold);
+    margin:28px 0;
+    padding:6px 0 6px 22px;
+  }
+  #about article{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 30px;
+    box-shadow:var(--shadow);
+  }
+  #about article h3{ margin-bottom:18px; }
+  #about ol{
+    list-style:none;
+    counter-reset:step;
+    padding:0; margin:0;
+    display:grid;
+    gap:14px;
+  }
+  #about ol li{
+    counter-increment:step;
+    position:relative;
+    padding-left:44px;
+    color:var(--slate);
+  }
+  #about ol li::before{
+    content:counter(step);
+    position:absolute; left:0; top:-2px;
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--gold);
+    color:var(--ink);
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:.85rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ============ COMPLAINT TICKET FORM ============ */
+  #complaint > p{ color:var(--slate); }
+  #complaint > p strong{ color:var(--coral); }
+
+  #complaint form{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    position:relative;
+    padding:8px;
+    background:
+      radial-gradient(circle 8px at 0 60px, var(--paper) 98%, transparent) ,
+      radial-gradient(circle 8px at 100% 60px, var(--paper) 98%, transparent),
+      var(--card);
+  }
+  #complaint form::before{
+    content:"TICKET";
+    position:absolute;
+    top:18px; right:22px;
+    font-family:var(--font-mono);
+    font-size:.68rem;
+    letter-spacing:.2em;
+    color:var(--gold-dark);
+    border:1.5px solid var(--gold);
+    border-radius:20px;
+    padding:5px 12px;
+    transform:rotate(4deg);
+    background:rgba(233,180,76,0.08);
+  }
+
+  fieldset{
+    border:none;
+    border-top:1px dashed var(--line);
+    margin:0;
+    padding:26px 26px 6px;
+  }
+  fieldset:first-of-type{ border-top:none; padding-top:34px; }
+
+  legend{ padding:0; margin-bottom:14px; }
+  legend h3{
+    font-size:1rem;
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--ink-soft);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin:0;
+  }
+  legend h3::before{
+    content:"";
+    width:8px; height:8px;
+    background:var(--gold);
+    display:inline-block;
+    border-radius:2px;
+  }
+
+  label{
+    display:block;
+    font-size:.85rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:16px 0 6px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:.95rem;
+    color:var(--ink);
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:11px 13px;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--gold-dark);
+    box-shadow:0 0 0 3px rgba(233,180,76,0.25);
+  }
+  textarea{ resize:vertical; }
+
+  /* priority radio -> chips */
+  #complaint fieldset p{
+    font-size:.85rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:16px 0 8px;
+  }
+  fieldset label:has(input[type="radio"]){
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    width:auto;
+    margin:0 8px 8px 0;
+    padding:8px 14px;
+    border:1.5px solid var(--line);
+    border-radius:30px;
+    font-weight:500;
+    font-size:.85rem;
+    cursor:pointer;
+    background:var(--paper);
+  }
+  fieldset label:has(input[value="low"]):has(:checked){ background:var(--sage); color:#fff; border-color:var(--sage); }
+  fieldset label:has(input[value="medium"]):has(:checked){ background:var(--gold); color:var(--ink); border-color:var(--gold-dark); }
+  fieldset label:has(input[value="high"]):has(:checked),
+  fieldset label:has(input[value="urgent"]):has(:checked){ background:var(--coral); color:#fff; border-color:var(--coral); }
+
+  fieldset label:has(input[type="checkbox"]){
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-weight:500;
+    color:var(--slate);
+  }
+
+  input[type="file"]{
+    font-family:var(--font-body);
+    font-size:.85rem;
+    padding:8px 0;
+  }
+
+  input[type="range"]{ accent-color:var(--gold-dark); width:100%; }
+  input[type="color"]{
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    width:64px; height:36px;
+    padding:2px;
+  }
+
+  button{
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-size:.82rem;
+    font-weight:600;
+    border-radius:30px;
+    padding:13px 26px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  button[type="submit"]{
+    background:var(--gold);
+    border:1.5px solid var(--gold-dark);
+    color:var(--ink);
+    margin-right:10px;
+  }
+  button[type="submit"]:hover{ transform:translateY(-2px); box-shadow:0 10px 20px -8px rgba(198,144,47,0.6); }
+  button[type="reset"]{
+    background:transparent;
+    border:1.5px solid var(--line);
+    color:var(--slate);
+  }
+  button[type="reset"]:hover{ border-color:var(--coral); color:var(--coral); }
+
+  /* ============ RESOURCES ============ */
+  #resources table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--card);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  #resources caption{
+    text-align:left;
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    font-size:.75rem;
+    color:var(--slate);
+    padding:0 0 10px;
+  }
+  #resources th{
+    background:var(--ink);
+    color:var(--paper);
+    text-align:left;
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:14px 16px;
+  }
+  #resources td{
+    padding:13px 16px;
+    border-bottom:1px solid var(--line);
+    font-size:.92rem;
+    color:var(--ink-soft);
+  }
+  #resources tbody tr:nth-child(even){ background:var(--paper-dim); }
+  #resources tbody tr:hover{ background:#FBF0DA; }
+  #resources tfoot td{
+    background:var(--paper-dim);
+    border-bottom:none;
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    color:var(--ink-soft);
+  }
+  #resources a[download]{
+    display:inline-block;
+    background:var(--gold);
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:600;
+    font-size:.8rem;
+    padding:6px 14px;
+    border-radius:20px;
+    transition:background .2s ease;
+  }
+  #resources a[download]:hover{ background:var(--gold-dark); }
+
+  #resources article{ margin-top:30px; }
+  #resources article ul{
+    list-style:none;
+    padding:0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  #resources article a{
+    text-decoration:none;
+    border:1.5px solid var(--ink);
+    color:var(--ink);
+    padding:9px 16px;
+    border-radius:30px;
+    font-size:.85rem;
+    font-weight:600;
+    display:inline-block;
+    transition:background .2s ease, color .2s ease;
+  }
+  #resources article a:hover{ background:var(--ink); color:#fff; }
+
+  #resources label[for="portal-progress"]{
+    display:inline-block;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:26px 0 8px;
+  }
+  progress{
+    display:block;
+    width:100%;
+    height:12px;
+    border-radius:20px;
+    overflow:hidden;
+    accent-color:var(--gold-dark);
+  }
+  progress::-webkit-progress-bar{ background:var(--paper-dim); border-radius:20px; }
+  progress::-webkit-progress-value{ background:linear-gradient(90deg, var(--gold-dark), var(--gold)); border-radius:20px; }
+  #resources span{
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    color:var(--slate);
+  }
+
+  /* ============ FAQ ============ */
+  #faq details{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:4px solid var(--gold);
+    border-radius:10px;
+    margin-bottom:12px;
+    padding:16px 20px;
+    box-shadow:var(--shadow);
+  }
+  #faq summary{
+    cursor:pointer;
+    font-weight:600;
+    color:var(--ink-soft);
+    font-family:var(--font-display);
+    font-size:1.05rem;
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  #faq summary::-webkit-details-marker{ display:none; }
+  #faq summary::after{
+    content:"+";
+    font-family:var(--font-mono);
+    color:var(--gold-dark);
+    font-size:1.3rem;
+    margin-left:12px;
+    transition:transform .2s ease;
+  }
+  #faq details[open] summary::after{ transform:rotate(45deg); }
+  #faq details p{
+    color:var(--slate);
+    margin:14px 0 2px;
+  }
+
+  /* ============ ANNOUNCEMENTS ASIDE ============ */
+  aside{
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:var(--radius);
+    padding:30px 30px 24px;
+    margin:0 0 40px;
+    position:relative;
+  }
+  aside h2, aside h3{ color:#fff; }
+  aside h3{ font-size:1rem; margin-top:24px; }
+  aside ul{ list-style:none; padding:0; margin:0; display:grid; gap:12px; }
+  aside ul li{
+    border-bottom:1px dashed rgba(255,255,255,0.15);
+    padding-bottom:10px;
+    font-size:.92rem;
+  }
+  aside ul li strong{ color:var(--gold); }
+  aside time{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    color:#B9C2D6;
+    margin-top:2px;
+  }
+  aside dl{ display:grid; gap:6px; margin-top:8px; }
+  aside dt{
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    color:var(--gold);
+    margin-top:10px;
+  }
+  aside dd{ margin:2px 0 0; color:#EDE9DD; }
+  aside a{ color:var(--gold); text-decoration:underline; }
+
+  /* ============ FOOTER ============ */
+  body > footer{
+    max-width:none;
+    background:var(--ink-soft);
+    color:#EDE9DD;
+    padding:44px 24px 30px;
+    margin-top:20px;
+  }
+  body > footer > *{ max-width:1080px; margin-left:auto; margin-right:auto; }
+  body > footer h3{ color:#fff; font-size:.95rem; margin:22px 0 10px; }
+  body > footer address{ font-style:normal; line-height:1.8; color:#CBD3E3; }
+  body > footer a{ text-decoration:none; }
+  body > footer a:hover{ color:var(--gold); }
+  body > footer ul{ list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:14px; }
+  body > footer p small{ color:#8894AC; }
+  body > footer > a[href="#top"]{
+    display:inline-block;
+    margin-top:20px;
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    color:var(--gold);
+    border:1px solid var(--gold);
+    border-radius:30px;
+    padding:8px 16px;
+    text-decoration:none;
+    transition:background .2s ease, color .2s ease;
+  }
+  body > footer > a[href="#top"]:hover{ background:var(--gold); color:var(--ink); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:640px){
+    section{ padding:38px 0; }
+    #home figure img{ height:220px; }
+    hr::before, hr::after{ display:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+
+<body id="top">
+<header>
+<img src="/images.png" alt="MIET College Logo" width="70" />
+<h1>MIET College</h1>
+<p>Smart Campus Helpdesk Portal</p>
+</header>
+
+<nav>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#complaint">Register Complaint</a></li>
+<li><a href="#resources">Resources</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+<hr />
+
+<main>
+<!-- Hero Section -->
+<section id="home">
+<figure>
+<img src="https://mietjmu.in/wp-content/uploads/2025/02/DJI_20241129113027_0387_D-Large.jpeg"
+alt="Aerial view of MIET College campus with academic buildings" width="100%" />
+<figcaption>MIET College — Main Campus</figcaption>
+</figure>
+<span class="eyebrow">Campus Helpdesk · Issue a Ticket</span>
+<h2>Something not working on campus?</h2>
+<p>
+Your one-stop portal for registering complaints, accessing resources,
+and staying informed about campus life. We are here to help you with
+every issue — big or small.
+</p>
+</section>
+
+<hr />
+
+<!-- About Section -->
+<section id="about">
+<span class="eyebrow">About</span>
+<h2>About the Helpdesk</h2>
+<p>
+The MIET Smart Campus Helpdesk is a digital platform that allows
+students to report issues related to hostels, labs, classrooms,
+library, transport, and more. Our team ensures timely resolution and
+keeps you updated on the status of your requests.
+</p>
+<blockquote>
+"Our mission is to provide a seamless experience for every student,
+ensuring their concerns are heard and resolved promptly."
+</blockquote>
+
+<article>
+<h3>How It Works</h3>
+<ol>
+<li>Fill the complaint form below with your details and issue</li>
+<li>Our team reviews and assigns the complaint</li>
+<li>Track progress through email notifications</li>
+<li>Confirm resolution once satisfied</li>
+</ol>
+</article>
+
+</section>
+
+<hr />
+
+<!-- Complaint Form Section -->
+<section id="complaint">
+<span class="eyebrow">Step Up</span>
+<h2>Register a Complaint</h2>
+<p>
+<small>Fields marked with <strong>*</strong> are required.</small>
+</p>
+
+<form>
+<!-- Fieldset 1: Student Details -->
+<fieldset>
+<legend>
+<h3>Student Details</h3>
+</legend>
+
+<label for="name">Full Name *</label>
+<input type="text" id="name" name="name" required placeholder="Enter your full name" />
+
+<label for="email">Email *</label>
+<input type="email" id="email" name="email" required placeholder="you@miet.edu" />
+
+<label for="roll">Roll Number *</label>
+<input type="text" id="roll" name="roll" required pattern="[A-Za-z0-9]+"
+title="Alphanumeric only (e.g., MIET22101)" placeholder="MIET22101" />
+
+<label for="phone">Phone *</label>
+<input type="tel" id="phone" name="phone" required pattern="[0-9]{10}"
+title="Enter 10-digit mobile number" placeholder="9876543210" />
+
+<label for="year">Year / Branch *</label>
+<select id="year" name="year" required>
+<option value="">-- Select --</option>
+<option value="cse-1">CSE 1st Year</option>
+<option value="cse-2">CSE 2nd Year</option>
+<option value="cse-3">CSE 3rd Year</option>
+<option value="cse-4">CSE 4th Year</option>
+<option value="ece-1">ECE 1st Year</option>
+<option value="ece-2">ECE 2nd Year</option>
+<option value="ece-3">ECE 3rd Year</option>
+<option value="ece-4">ECE 4th Year</option>
+</select>
+</fieldset>
+
+<!-- Fieldset 2: Complaint Details -->
+<fieldset>
+<legend>
+<h3>Complaint Details</h3>
+</legend>
+
+<label for="category">Category *</label>
+<select id="category" name="category" required>
+<option value="">-- Select Category --</option>
+<option value="hostel">Hostel Issue</option>
+<option value="lab">Lab / Equipment Issue</option>
+<option value="classroom">Classroom Issue</option>
+<option value="library">Library Issue</option>
+<option value="transport">Transport Issue</option>
+<option value="canteen">Canteen Issue</option>
+<option value="other">Other</option>
+</select>
+
+<label for="title">Complaint Title *</label>
+<input type="text" id="title" name="title" required minlength="10"
+placeholder="Brief title (min 10 characters)" />
+
+<label for="description">Description *</label>
+<textarea id="description" name="description" rows="5" required maxlength="500"
+placeholder="Describe your issue in detail..."></textarea>
+
+<p>Priority *</p>
+<label><input type="radio" name="priority" value="low" required />
+Low</label>
+<label><input type="radio" name="priority" value="medium" />
+Medium</label>
+<label><input type="radio" name="priority" value="high" /> High</label>
+<label><input type="radio" name="priority" value="urgent" />
+Urgent</label>
+
+<label for="location">Location</label>
+<input type="text" id="location" name="location" list="locations"
+placeholder="Start typing for suggestions" />
+<datalist id="locations">
+<option value="Main Block"></option>
+<option value="Hostel A"></option>
+<option value="Hostel B"></option>
+<option value="Lab Complex"></option>
+<option value="Library"></option>
+<option value="Canteen"></option>
+</datalist>
+</fieldset>
+
+<!-- Fieldset 3: Supporting Info (Level 3) -->
+<fieldset>
+<legend>
+<h3>Supporting Information (Optional)</h3>
+</legend>
+
+<label for="issue-date">Date of Issue</label>
+<input type="date" id="issue-date" name="issue-date" />
+
+<label for="evidence">Upload Images</label>
+<input type="file" id="evidence" name="evidence" accept="image/*" multiple />
+
+<label for="satisfaction">Satisfaction before issue (1-10)</label>
+<input type="range" id="satisfaction" name="satisfaction" min="1" max="10" value="5" />
+
+<label for="tag">Resolution Tag</label>
+<input type="color" id="tag" name="tag" value="#ff0000" />
+
+<input type="hidden" name="status" value="pending" />
+</fieldset>
+
+<!-- Submit -->
+<fieldset>
+<legend>
+<h3>Submit</h3>
+</legend>
+<label>
+<input type="checkbox" name="agree" required />
+I confirm the information provided is correct *
+</label>
+<br /><br />
+<button type="submit">Submit Complaint</button>
+<button type="reset">Clear Form</button>
+</fieldset>
+</form>
+</section>
+
+<hr />
+
+<!-- Resources Section -->
+<section id="resources">
+<span class="eyebrow">Downloads</span>
+<h2>Resources &amp; Downloads</h2>
+
+<table>
+<caption>
+Course Materials and Helpdesk Resources
+</caption>
+<thead>
+<tr>
+<th>Resource Name</th>
+<th>Type</th>
+<th>Size</th>
+<th>Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Helpdesk User Guide</td>
+<td>PDF</td>
+<td>1.2 MB</td>
+<td><a href="#" download>Download</a></td>
+</tr>
+<tr>
+<td>
+Complaint
+<abbr title="Standard Operating Procedure">SOP</abbr> Document
+</td>
+<td>PDF</td>
+<td>800 KB</td>
+<td><a href="#" download>Download</a></td>
+</tr>
+<tr>
+<td>Hostel Rules &amp; Regulations</td>
+<td>PDF</td>
+<td>2.1 MB</td>
+<td><a href="#" download>Download</a></td>
+</tr>
+<tr>
+<td>Lab Equipment Request Form</td>
+<td>PDF</td>
+<td>450 KB</td>
+<td><a href="#" download>Download</a></td>
+</tr>
+<tr>
+<td>Academic Calendar 2026-27</td>
+<td>PDF</td>
+<td>3.4 MB</td>
+<td>
+<a href="#" download>Download</a>
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan="4"><strong>Total Resources Available: 5</strong></td>
+</tr>
+</tfoot>
+</table>
+
+<br />
+
+<!-- External Reference Links -->
+<article>
+<h3>Helpful External Links</h3>
+<ul>
+<li>
+<a href="https://www.miet.edu" target="_blank" rel="noopener noreferrer"
+aria-label="MIET College Official Website (opens in new tab)">
+MIET Official Website
+</a>
+</li>
+<li>
+<a href="https://studentportal.miet.edu" target="_blank" rel="noopener noreferrer"
+aria-label="Student Portal (opens in new tab)">
+Student Portal
+</a>
+</li>
+<li>
+<a href="https://mail.miet.edu" target="_blank" rel="noopener noreferrer"
+aria-label="College Email (opens in new tab)">
+College Email
+</a>
+</li>
+</ul>
+</article>
+
+<!-- Progress -->
+<label for="portal-progress">Portal Setup Progress:</label>
+<progress id="portal-progress" value="85" max="100">85%</progress>
+<span>85% complete</span>
+</section>
+
+<hr />
+
+<!-- FAQ Section -->
+<section id="faq">
+<span class="eyebrow">Help</span>
+<h2>Frequently Asked Questions</h2>
+
+<details>
+<summary>How do I track my complaint status?</summary>
+<p>
+After submitting a complaint, you will receive email updates. You
+can also check the status by logging into the student portal.
+</p>
+</details>
+
+<details>
+<summary>How long does it take to resolve a complaint?</summary>
+<p>
+Most complaints are resolved within 48 hours. Urgent issues are
+prioritised and resolved within 24 hours.
+</p>
+</details>
+
+<details>
+<summary>Can I submit an anonymous complaint?</summary>
+<p>
+Yes, you may leave the name field as "Anonymous". However, providing
+contact details helps us resolve issues faster.
+</p>
+</details>
+
+<details>
+<summary>What categories of complaints are supported?</summary>
+<p>
+We support Hostel, Lab, Classroom, Library, Transport, and Canteen
+related issues. Select "Other" if your issue does not fit any
+category.
+</p>
+</details>
+</section>
+
+<hr />
+
+<!-- Announcements Sidebar -->
+<aside>
+<h2>Announcements</h2>
+<ul>
+<li>
+<strong>Tech Fest 2026</strong>
+<time datetime="2026-10-15">Oct 15-17</time>
+</li>
+<li>
+<strong>Placement Drive</strong>
+<time datetime="2026-09-20">Sep 20</time>
+</li>
+<li>
+<strong>Hostel Maintenance</strong>
+<time datetime="2026-08-25">Aug 25 (Water supply)</time>
+</li>
+<li>
+<strong>Library Timings</strong> — Extended till 8 PM during exams
+</li>
+</ul>
+
+<h3>Quick Info</h3>
+<dl>
+<dt>Helpdesk Hours</dt>
+<dd>Mon – Sat: 9 AM to 5 PM</dd>
+<dt>Emergency Contact</dt>
+<dd>+91-98765-43000</dd>
+<dt>Email</dt>
+<dd><a href="mailto:helpdesk@miet.edu">helpdesk@miet.edu</a></dd>
+</dl>
+</aside>
+</main>
+
+<hr />
+
+<!-- Footer -->
+<footer id="contact">
+<address>
+<strong>MIET College</strong><br />
+NH-44, Near City Centre, Meerut<br />
+Uttar Pradesh - 250001<br />
+Phone: <a href="tel:+919876543000">+91-98765-43000</a><br />
+Email: <a href="mailto:helpdesk@miet.edu">helpdesk@miet.edu</a>
+</address>
+
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#">Student Portal</a></li>
+<li><a href="#">ERP Login</a></li>
+<li><a href="#">Library</a></li>
+<li><a href="#">Placements</a></li>
+</ul>
+
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#" aria-label="Facebook">Facebook</a></li>
+<li><a href="#" aria-label="Instagram">Instagram</a></li>
+<li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
+<li><a href="#" aria-label="YouTube">YouTube</a></li>
+</ul>
+
+<p><small>&copy; 2026 MIET College. All rights reserved.</small></p>
+<a href="#top">&uarr; Back to top</a>
+</footer>
+</body>
+
+</html>
